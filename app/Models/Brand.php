@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
-
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 #[Fillable(['name', 'slug', 'description', 'logo', 'is_active', 'website', 'sort_order'])]
 class Brand extends Model
 {

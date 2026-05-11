@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 #[Fillable(['street_address', 'street_address_2', 'phone', 'full_name', 'customer_id', 'city', 'state', 'postal_code', 'country', 'is_default', 'type'])]
 class Address extends Model
 {
@@ -19,13 +20,13 @@ class Address extends Model
     #[Scope()]
     public function default(Builder $query): Builder
     {
-        $query->where('is_default', true);
+        return $query->where('is_default', true);
     }
 
     #[Scope()]
     public function type(Builder $query, string $type): Builder
     {
-        $query->where('type', $type);
+        return $query->where('type', $type);
     }
 
     public function customer()
