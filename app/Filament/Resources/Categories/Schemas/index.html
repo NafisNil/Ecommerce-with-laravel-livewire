@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TB Flowchart</title>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+</head>
+<body>
+
+  <div class="mermaid">
+    graph TD
+    %% Node Definitions & Text
+    Index[Number of index visited] --- Start[Bacteriologically Positive Household Contact]
+    
+    %% Main Symptom Branching
+    Start --> NoSym[No symptoms]
+    Start --> HasSym[Presence of symptoms]
+    
+    %% Symptom Branch
+    HasSym --> DocEval[Evaluation by doctor for TB]
+    DocEval --> TBConf[TB confirmed]
+    DocEval --> NoTB[No TB]
+    
+    TBConf --> Tx[Provide TB treatment]
+    NoTB --> InitTPT1[Initiate TPT]
+    
+    %% No Symptom Age Branching
+    NoSym --> AgeUnder15["Age <5 years and Age >5 years to <15 Years"]
+    NoSym --> AgeOver60["Age >60 years"]
+    NoSym --> AgeMid["Age >15 years to <60 years"]
+    
+    %% Left Branch (Under 15 / Over 60 Path)
+    AgeUnder15 --> NoSymChild[No Symptom]
+    NoSymChild --> CXR1[X-ray Chest]
+    AgeOver60 --> CXR2["X-ray Chest if possible"]
+    
+    CXR1 --> Abnormality[Any abnormality]
+    CXR1 --> NoAbnormality[No abnormality]
+    
+    Abnormality --> DocEval2[Evaluation by doctor for TB]
+    DocEval2 --> TBConf2[TB confirmed]
+    DocEval2 --> NoTB2[No TB]
+    
+    NoAbnormality --> InitTPT2[Initiate TPT]
+    NoTB2 --> InitTPT2
+    
+    CXR2 --> InitTPT2
+    
+    %% Right Branch (15 to 60 Path)
+    AgeMid --> Risk["Presence of risk factors*"]
+    AgeMid --> NoRisk[Absence of risk factors]
+    
+    Risk --> CXR2
+    NoRisk --> Test[TST/IGRA if possible]
+    
+    Test --> Positive[Positive]
+    Test --> Negative[Negative]
+    
+    Positive --> InitTPT3[Initiate TPT]
+    Negative --> NoTPT[No TPT]
+
+    %% Styling and Colors
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef startNode fill:#0284c7,color:#fff,stroke:#0284c7,font-weight:bold;
+    classDef tptNode fill:#0f172a,color:#fff,stroke:#0f172a,font-weight:bold;
+    classDef noTptNode fill:#0284c7,color:#fff,stroke:#0284c7,font-weight:bold;
+    classDef txNode fill:#e2e8f0,color:#000,stroke:#cbd5e1;
+
+    class Start startNode;
+    class InitTPT1,InitTPT2,InitTPT3 tptNode;
+    class NoTPT noTptNode;
+    class Tx txNode;
+  </div>
+
+</body>
+</html>

@@ -1,32 +1,38 @@
 <?php
 
-namespace App\Filament\Resources\Categories\Tables;
+namespace App\Filament\Resources\Reviews\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class CategoriesTable
+class ReviewsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('slug')
-                    ->searchable(),
-                ImageColumn::make('image'),
-                IconColumn::make('is_active')
-                    ->boolean(),
-                TextColumn::make('sort_order')
+                TextColumn::make('product_id')
                     ->numeric()
                     ->sortable(),
-
+                TextColumn::make('customer_id')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('order_id')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('rating')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('title')
+                    ->searchable(),
+                IconColumn::make('is_verified')
+                    ->boolean(),
+                IconColumn::make('is_approved')
+                    ->boolean(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

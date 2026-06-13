@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\Categories\Tables;
+namespace App\Filament\Resources\Customers\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class CategoriesTable
+class CustomersTable
 {
     public static function configure(Table $table): Table
     {
@@ -18,15 +17,24 @@ class CategoriesTable
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('slug')
+                TextColumn::make('email')
+                    ->label('Email address')
                     ->searchable(),
-                ImageColumn::make('image'),
+                TextColumn::make('email_verified_at')
+                    ->searchable(),
+                TextColumn::make('phone')
+                    ->searchable(),
+                TextColumn::make('date_of_birth')
+                    ->date()
+                    ->sortable(),
+                TextColumn::make('gender')
+                    ->badge(),
                 IconColumn::make('is_active')
                     ->boolean(),
-                TextColumn::make('sort_order')
-                    ->numeric()
-                    ->sortable(),
-
+                TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

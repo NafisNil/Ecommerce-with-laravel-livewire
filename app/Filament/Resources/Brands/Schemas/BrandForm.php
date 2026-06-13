@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\Categories\Schemas;
+namespace App\Filament\Resources\Brands\Schemas;
 
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-
-class CategoryForm
+use Filament\Schemas\Components\Section;
+class BrandForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -20,28 +19,26 @@ class CategoryForm
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('slug')->unique(ignoreRecord: true)->readOnly()
-                    ->visibleOn('edit'),
+                    ->visibleOn('edit')
+                    ->required(),
                 Textarea::make('description')
                     ->default(null)
                     ->columnSpanFull(),
-                FileUpload::make('image')->disk('public')->directory('categories')->imageEditor()->preserveFilenames()->downloadable()
-                    ->image(),
-                     ]),
-
-
+                FileUpload::make('logo')->disk('public')->directory('brands')->imageEditor()->preserveFilenames()->downloadable()
+                    ->image()->maxSize(2048)
+                    ->default(null),
+                ]),
             Section::make('SEO Information')->columnSpanFull()->columns(2)
-            ->schema([         
+            ->schema([
                 Toggle::make('is_active')
                     ->required(),
+                TextInput::make('website')
+                    ->url()->placeholder('https://example.com')
+                    ->default(null),
                 TextInput::make('sort_order')
                     ->required()
                     ->numeric()
                     ->default(0),
-                TextInput::make('meta_title')
-                    ->default(null),
-                Textarea::make('meta_description')
-                    ->default(null)
-                    ->columnSpanFull(),
             ]),
             ]);
     }
