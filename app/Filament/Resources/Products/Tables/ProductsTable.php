@@ -8,6 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -18,16 +19,14 @@ class ProductsTable
     {
         return $table
             ->columns([
-                TextColumn::make('category_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('brand_id')
-                    ->numeric()
-                    ->sortable(),
+                ImageColumn::make('primaryImage.image_path')->disk('public')->circular()->label('Image'),
+                TextColumn::make('category.name')
+                    ->sortable()->searchable(),
+                TextColumn::make('brand.name')
+                    ->sortable()->searchable(),
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('slug')
-                    ->searchable(),
+
                 TextColumn::make('sku')
                     ->label('SKU')
                     ->searchable(),
@@ -56,13 +55,9 @@ class ProductsTable
                     ->boolean(),
                 IconColumn::make('has_variants')
                     ->boolean(),
-                TextColumn::make('weight')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('meta_title')
-                    ->searchable(),
+
                 TextColumn::make('view_count')
-                    ->numeric()
+                    ->numeric()->badge()
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -72,7 +67,7 @@ class ProductsTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->defaultSort('created_at', 'desc')
             ->filters([
                 TrashedFilter::make(),
             ])

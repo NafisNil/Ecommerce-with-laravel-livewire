@@ -20,4 +20,26 @@ class EditProduct extends EditRecord
             RestoreAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['images'] = $this->record->images->pluck('image_path')->toArray();
+
+        return $data;
+    }
+
+    protected function afterSave(): void
+    {
+        $images = array_values($this->form->getRawState()['images'] ?? []);
+
+        $this->record->images()->delete();
+
+        foreach ($images as $index => $imagePath) {
+            $this->record->images()->create([
+                'image_path' => $imagePath,
+                'sort_order' => $index,
+                'is_primary'  => $index === 0,
+            ]);
+        }
+    }
 }

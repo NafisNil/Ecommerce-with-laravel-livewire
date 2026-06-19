@@ -15,13 +15,13 @@ class CouponsTable
     {
         return $table
             ->columns([
-                TextColumn::make('code')
-                    ->searchable(),
-                TextColumn::make('type')
+                TextColumn::make('code')->sortable()->searchable()->copyable(true),
+                TextColumn::make('type')->color(
+                    fn($state) => $state === 'fixed' ? 'success' : 'warning'
+                )
                     ->badge(),
-                TextColumn::make('value')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('value')->formatStateUsing(fn($state, $record) => $record->type === 'fixed' ? '$' . $state : $state . '%')->sortable(),
+
                 TextColumn::make('min_order_amount')
                     ->numeric()
                     ->sortable(),
