@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 #[Fillable(['street_address', 'street_address_2', 'phone', 'full_name', 'customer_id', 'city', 'state', 'postal_code', 'country', 'is_default', 'type'])]
 class Address extends Model
 {
     //
+    use HasFactory;
     protected function casts(): array
     {
         return [

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 
-#[Fillable(['name', 'email', 'password', 'phone', 'date_of_birth', 'gender', 'is_active'])]
+#[Fillable(['name', 'email', 'password', 'phone', 'date_of_birth', 'gender', 'is_active', 'email_verified_at', 'remember_token'])]
 class Customer extends Model
 {
     //

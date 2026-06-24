@@ -8,6 +8,8 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 
 class CouponsTable
 {
@@ -29,7 +31,10 @@ class CouponsTable
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('usage_limit')
-                    ->numeric()
+                    ->toggleable()
+                    ->sortable(),
+                TextColumn::make('usage_count')
+                    ->counts('usages')->color('warning')
                     ->sortable(),
                 TextColumn::make('usage_limit_per_user')
                     ->numeric()
@@ -39,7 +44,7 @@ class CouponsTable
                     ->sortable(),
                 TextColumn::make('end_at')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()->color(fn($state) => now()->greaterThan($state) ? 'danger' : 'success'),
                 IconColumn::make('is_active')
                     ->boolean(),
                 TextColumn::make('created_at')
@@ -50,9 +55,18 @@ class CouponsTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->defaultSort('created_at', 'desc')
             ->filters([
                 //
+                SelectFilter::make('type')->options([
+                    'fixed' => 'Fixed',
+                    'percent' => 'Percent',
+                ])->native(false),
+                TernaryFilter::make('is_active')
+                    ->label('Active')
+                    ->trueLabel('Active')
+                    ->falseLabel('Inactive')
+                    ->native(false)->boolean(),
             ])
             ->recordActions([
                 EditAction::make(),
