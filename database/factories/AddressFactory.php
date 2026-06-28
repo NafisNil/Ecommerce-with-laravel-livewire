@@ -21,7 +21,7 @@ class AddressFactory extends Factory
             //
             'customer_id' => Customer::factory(),
             'street_address' => $this->faker->streetAddress(),
-            'street_address_2' => $this->faker->secondaryAddress(),
+            'street_address2' => $this->faker->secondaryAddress(),
             'phone' => $this->faker->phoneNumber(),
             'full_name' => $this->faker->name(),
             'city' => $this->faker->city(),
@@ -29,7 +29,7 @@ class AddressFactory extends Factory
             'postal_code' => $this->faker->postcode(),
             'country' => $this->faker->country(),
             'is_default' => $this->faker->boolean(),
-            'type' => $this->faker->randomElement(['home', 'work', 'other']),
+            'type' => $this->faker->randomElement(['billing', 'shipping', 'both']),
         ];
     }
 

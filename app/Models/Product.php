@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 #[Fillable(['name', 'short_description', 'slug', 'description', 'price','compare_price','cost_price', 'stock_quantity','stock_threshold','manage_stock','stock_status', 'category_id', 'brand_id', 'sku', 'weight', 'status', 'meta_title', 'meta_description',  'is_featured', 'has_variants','is_active', 'view_count'])]
 class Product extends Model
 {
     //
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
     protected $casts = [
         'manage_stock' => 'boolean',
         'is_featured' => 'boolean',

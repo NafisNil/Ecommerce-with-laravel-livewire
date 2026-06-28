@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 #[Fillable(['product_id', 'image_path', 'is_primary', 'alt_text', 'sort_order', 'variant_id'])]
 class ProductImage extends Model
 {
     //
+    use HasFactory;
     protected $casts = [
         'is_primary' => 'boolean',
         'sort_order' => 'integer',

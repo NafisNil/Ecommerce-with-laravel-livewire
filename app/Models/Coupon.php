@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Casts;
 use Carbon\Carbon;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 #[Fillable(['code', 'type', 'value', 'min_order_amount', 'max_discount_amount', 'usage_limit', 'usage_limit_per_user', 'is_active', 'start_at', 'end_at'])]
 
 class Coupon extends Model
 {
     //
+    use HasFactory;
     protected function casts(): array
     {
         return [

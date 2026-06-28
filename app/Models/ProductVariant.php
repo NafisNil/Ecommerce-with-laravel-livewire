@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Override;
 
 #[Fillable(['product_id', 'name', 'price', 'compare_price', 'stock_quantity', 'manage_stock', 'stock_status', 'sku', 'options', 'is_active', 'sort_order'])]
@@ -13,6 +14,7 @@ use Override;
 class ProductVariant extends Model
 {
     //
+    use HasFactory;
     protected $casts = [
         'manage_stock' => 'boolean',
         'is_active' => 'boolean',

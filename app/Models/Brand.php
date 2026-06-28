@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 #[Fillable(['name', 'slug', 'description', 'logo', 'is_active', 'website', 'sort_order'])]
 class Brand extends Model
 {
     //
-
+    use HasFactory;
     #[Scope()]
     protected function active(Builder $query): Builder
     {

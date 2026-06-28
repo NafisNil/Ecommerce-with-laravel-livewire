@@ -55,11 +55,11 @@ class CustomerSeeder extends Seeder
             for ($j = 0; $j < $reviewCount; $j++) {
                 Review::factory()->create([
                     'customer_id' => $customer->id,
+                    'product_id' => Product::inRandomOrder()->first()->id,
                 ]);
             }
             Address::factory()->create([
                 'customer_id' => $customer->id,
-                'product_id' => Product::inRandomOrder()->first()->id,
             ]);
             $bar->advance();
         }
