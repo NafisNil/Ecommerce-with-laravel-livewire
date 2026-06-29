@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
-
+use App\Models\Customer;
+use Illuminate\Support\Facades\Hash;
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
@@ -29,6 +30,14 @@ class FortifyServiceProvider extends ServiceProvider
         $this->configureActions();
         $this->configureViews();
         $this->configureRateLimiting();
+
+        Fortify::authenticateUsing(function (Request $request) {
+            $customer = Customer::where('email', $request->email)->first();
+
+            if ($customer && Hash::check($request->password, $customer->password)) {
+                return $customer;
+            }
+        });
     }
 
     /**
@@ -45,12 +54,12 @@ class FortifyServiceProvider extends ServiceProvider
      */
     private function configureViews(): void
     {
-        Fortify::loginView(fn () => view('livewire.auth.login'));
-        Fortify::verifyEmailView(fn () => view('livewire.auth.verify-email'));
-        Fortify::twoFactorChallengeView(fn () => view('livewire.auth.two-factor-challenge'));
-        Fortify::confirmPasswordView(fn () => view('livewire.auth.confirm-password'));
-        Fortify::registerView(fn () => view('livewire.auth.register'));
-        Fortify::resetPasswordView(fn () => view('livewire.auth.reset-password'));
+        Fortify::loginView(fn () => view('auth.customer.login'));
+        Fortify::verifyEmailView(fn () => view('auth.customer.verify-email'));
+        Fortify::twoFactorChallengeView(fn () => view('auth.customer.two-factor-challenge'));
+        Fortify::confirmPasswordView(fn () => view('auth.customer.confirm-password'));
+        Fortify::registerView(fn () => view('auth.customer.register'));
+        Fortify::resetPasswordView(fn () => view('auth.customer.reset-password'));
         Fortify::requestPasswordResetLinkView(fn () => view('livewire.auth.forgot-password'));
     }
 
